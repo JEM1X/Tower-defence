@@ -20,7 +20,7 @@ m_EmbeddedPackageManifests:
 m_LocalPackages:
   m_LocalFileStatus: []
 m_ProjectPath: C:/-__-/Tower defence/Packages
-m_EditorVersion: 2022.3.20f1 (61c2feb0970d)
+m_EditorVersion: 2022.3.21f1 (bf09ca542b87)
 m_ResolvedPackages:
 - packageId: com.unity.collab-proxy@2.3.1
   testable: 0
