@@ -14,7 +14,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public Transform parentAfterDrag;
     public void Start()
     {
-        GetComponent<Image>().sprite = Tower.BaseTower.TowerIcon;
+       // GetComponent<Image>().sprite = Tower.BaseTower.TowerIcon;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

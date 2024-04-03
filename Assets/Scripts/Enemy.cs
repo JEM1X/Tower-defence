@@ -71,6 +71,12 @@ public class Enemy : MonoBehaviour
                 rm.EnemyKill(); // получаем золото за уничтожение юнита
             }
         }
+        else if (other.CompareTag("Castle"))
+        {
+            Destroy(gameObject); // Уничтожаем вражеский юнит при столкновении с замком
+
+
+        }
     }
 
     // реализация увеличения здоровья с новым юнитом (конфликт с "HP=MaxHP;" в "void Start()")
