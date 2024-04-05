@@ -356,6 +356,8 @@
 "Assets/Scripts/Castle.cs"
 "Assets/Scripts/Cell.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/FreezeBullet.cs"
+"Assets/Scripts/FreezeTower.cs"
 "Assets/Scripts/InventoryItem.cs"
 "Assets/Scripts/InventoryManager.cs"
 "Assets/Scripts/InventorySlot.cs"
