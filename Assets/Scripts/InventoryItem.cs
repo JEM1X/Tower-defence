@@ -4,21 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using UnityEngine.PlayerLoop;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("UI")]
     public Image image;
-    public ScriptableObject Tower;
+    public MasterTower tower;
 
     [HideInInspector] public Transform parentAfterDrag;
     public void Start()
     {
-       // GetComponent<Image>().sprite = Tower.BaseTower.TowerIcon;
+        InitialiseMasterTowerItem(tower);
     }
+    public void DeleteItem()
+    {
+        Destroy(gameObject);
+    }
+    public void InitialiseMasterTowerItem(MasterTower newtower)
+    {
+        tower = newtower;
+        image.sprite = newtower.TowerIcon;
+    }
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("begin drag");
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -27,13 +37,24 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData) 
     {
-        Debug.Log("drag");
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("end drag");
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Создаем луч от камеры к месту, где был отпущен предмет
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity)) // Проверяем, попал ли луч на какой-то объект
+        {
+            Debug.Log(hit.collider.gameObject);
+            if (hit.collider.gameObject.GetComponent<Cell>())
+            {
+                hit.collider.gameObject.GetComponent<Cell>().BuildTower(tower);
+                Destroy(gameObject);
+            }
+
+        }
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
     }

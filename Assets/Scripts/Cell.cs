@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Cell : MonoBehaviour
+public class Cell : MonoBehaviour //, IDropHandler
 {
   public Material MainMaterial;	// исходный материал (материал по умолчанию)
   public Material CanMaterial;	// материал, если можем строить (при наведении курсора на объект)
   public Material CantMaterial;	// материал, если не можем строить (при наведении курсора на объект)
   public bool CanBuild;			// можем ли строить
-  public GameObject TowerPrefab; // экземпляр башни
   private ResourceManager rm; // ссылка на скрипт "ResourceManager"
 
   void Start()
@@ -34,19 +34,9 @@ public class Cell : MonoBehaviour
     GetComponent<Renderer>().material = MainMaterial; // возвратить объекту исходный материал
   }
 
-  private void OnMouseUp() // отжата кнопка мыши над ячейкой игрового поля
-  {
-    if (CanBuild && rm.Gold >= rm.TowerCost) // если строительство разрешено и хватает золота для строительства
+    public void BuildTower(MasterTower Mtower)
     {
-      Tower tower = Instantiate (TowerPrefab, transform.position, Quaternion.Euler (-90, Random.Range(0, 360), 0)).GetComponent<Tower>();
-	  // создаём объект "TowerPrefab" в центре текущей ячейки с координатами "transform.position"
-	  // "Quaternion.Euler" - поворот со случайной координатой "Random.Range(0,360)" по оси "Y"
-	  // ".GetComponent<Tower>()" - ссылка на экземпляр башни "TowerPrefab" (т.к. "TowerPrefab" типа "GameObject")
-
-	  CanBuild = false; // запрещаем строительство текущей ячейки
-
-      rm.BuildTower(); // уменьшаем значение золота
+        Tower tower = Instantiate(Mtower.Tower, transform.position, Quaternion.Euler(-90, Random.Range(0, 360), 0)).GetComponent<Tower>();
     }
-  }
 
 }
