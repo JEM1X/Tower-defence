@@ -7,6 +7,8 @@ TagManager:
   - Castle
   - enemyBug
   - Bullet
+  - FreezeBullet
+  - Enemy
   layers:
   - Default
   - TransparentFX

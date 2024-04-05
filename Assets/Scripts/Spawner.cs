@@ -6,18 +6,22 @@ public class Spawner : MonoBehaviour
 {
   public Enemy EnemyPrefab;
   public float TimeToSpawn; // частота (промежуток времени) создания новых юнитов
+  public float MinTimeToSpawn; // минимальное значение для частоты создания новых юнитов
   public Transform[] Points; // массив точек движения юнита
   private float timer;
   public float MainHP, IncreaseHP; // основное и дельта здоровья для следующих юнитов
+  public float timeSinceLastDecrease;
 
   void Start()
   {
     timer = TimeToSpawn; // время создания 1-го юнита
+    timeSinceLastDecrease = 0f;
   }
 
   void Update()
   {
     timer -= Time.deltaTime; // из "timer" вычитаем время рендеринга/отрисовки
+        timeSinceLastDecrease += Time.deltaTime;
 
     if (timer <= 0)
     {
@@ -33,6 +37,17 @@ public class Spawner : MonoBehaviour
       // реализация увеличения здоровья с новым юнитом
       enemy.SetHP (MainHP); // передаём "новое" здоровье экз.прф."Enemy"
       MainHP += IncreaseHP; // увеличиваем здоровье для каждого нового юнита
+
+            if (timeSinceLastDecrease >= 30f)
+            {
+                MainHP += 20;
+                TimeToSpawn /= 2; // уменьшаем частоту создания новых юнитов (спавна)
+                if (TimeToSpawn < MinTimeToSpawn)
+                {
+                    TimeToSpawn = MinTimeToSpawn; // устанавливаем минимальное значение для частоты спавна
+                }
+                timeSinceLastDecrease = 0f;
+            }
     }
   }
 
