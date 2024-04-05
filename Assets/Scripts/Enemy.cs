@@ -68,13 +68,25 @@ public class Enemy : MonoBehaviour
             {
                 Destroy(gameObject); // уничтожаем юнит (экз.прф."Enemy")
 
-                rm.EnemyKill(); // получаем золото за уничтожение юнита
+                rm.EnemyKill(); // получаем золото за уничтожение юнита 
+            }
+        } 
+        else if (other.CompareTag("FreezeBullet"))
+        {
+            Destroy(other.gameObject);
+
+            HP -= other.GetComponent<FreezeBullet>().Damage;
+
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+
+                rm.EnemyKill();
             }
         }
         else if (other.CompareTag("Castle"))
         {
             Destroy(gameObject); // ”ничтожаем вражеский юнит при столкновении с замком
-
 
         }
     }
