@@ -7,7 +7,20 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] inventorySlots;
     public GameObject ItemPrefab;
     public MasterTower[] towerarr;
+
    public bool AddItemToFreeSlot(MasterTower tower)
+    {
+        InventorySlot slot = GetFreeSlot();
+            if (slot != null)
+            {
+                AddItemToSlot(tower, slot);
+                return true;
+            }
+        
+        return false;
+    }
+
+    public InventorySlot GetFreeSlot()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
@@ -15,11 +28,10 @@ public class InventoryManager : MonoBehaviour
             InventoryItem iteminslot = slot.GetComponentInChildren<InventoryItem>();
             if (iteminslot == null)
             {
-                AddItemToSlot(tower, slot);
-                return true;
+                return slot;
             }
         }
-        return false;
+        return null;
     }
 
     public void AddItemToSlot(MasterTower tower, InventorySlot slot)

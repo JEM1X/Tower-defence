@@ -23,7 +23,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
         GameObject child = transform.GetChild(0).gameObject;
         InventoryItem childclass = child.GetComponent<InventoryItem>();
-        Debug.Log(DraggedItem.tower.ID % 3);
         if (DraggedItem.tower.ID % 3 != 0)
         {
             if (DraggedItem.tower == transform.GetChild(0).GetComponent<InventoryItem>().tower)

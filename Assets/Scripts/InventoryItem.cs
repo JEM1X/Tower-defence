@@ -24,6 +24,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log(eventData);
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -42,7 +43,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity)) // Проверяем, попал ли луч на какой-то объект
         {
-            Debug.Log(hit.collider.gameObject);
             if (hit.collider.gameObject.GetComponent<Cell>())
             {
                 if (hit.collider.gameObject.GetComponent<Cell>().BuildTower(tower))
