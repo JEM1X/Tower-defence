@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-using UnityEngine.PlayerLoop;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -17,16 +15,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         InitialiseMasterTowerItem(tower);
     }
-    public void DeleteItem()
-    {
-        Destroy(gameObject);
-    }
     public void InitialiseMasterTowerItem(MasterTower newtower)
     {
         tower = newtower;
         image.sprite = newtower.TowerIcon;
+        transform.GetChild(0).gameObject.GetComponent<Text>().text = (tower.ID % 3).ToString();
     }
-    
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
@@ -50,8 +45,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Debug.Log(hit.collider.gameObject);
             if (hit.collider.gameObject.GetComponent<Cell>())
             {
-                hit.collider.gameObject.GetComponent<Cell>().BuildTower(tower);
-                Destroy(gameObject);
+                if (hit.collider.gameObject.GetComponent<Cell>().BuildTower(tower))
+                {
+                    Destroy(gameObject);
+                }
+                
             }
 
         }

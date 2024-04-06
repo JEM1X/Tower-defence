@@ -1,23 +1,39 @@
 using System.Collections;
-using System. Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
-{ 
+{
+    InventoryManager IM;
+
+    public void Start()
+    {
+        IM = FindObjectOfType<InventoryManager>();
+    }
     public void OnDrop(PointerEventData eventData)
     {
-        Transform child = transform.GetChild(0);
-        InventoryItem childclass = child.GetComponent<InventoryItem>();
-        if (child == null)
+        InventoryItem DraggedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+        if (transform.childCount == 0)
         {
-            InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+            InventoryItem inventoryItem = DraggedItem;
             inventoryItem.parentAfterDrag = transform;
             Debug.Log(eventData.pointerDrag);
+            return;
         }
-        if (eventData.pointerDrag.GetComponent<InventoryItem>().tower == childclass.tower) 
+        GameObject child = transform.GetChild(0).gameObject;
+        InventoryItem childclass = child.GetComponent<InventoryItem>();
+        Debug.Log(DraggedItem.tower.ID % 3);
+        if (DraggedItem.tower.ID % 3 != 0)
         {
-            Debug.Log("смешать");
-        }
+            if (DraggedItem.tower == transform.GetChild(0).GetComponent<InventoryItem>().tower)
+            {
+                Destroy(child);
+                IM.AddItemToSlot(IM.GetTower(DraggedItem.tower.ID + 1), this.GetComponent<InventorySlot>());
+                Destroy(eventData.pointerDrag);
+
+            }
+        }    
+            
     }
 }

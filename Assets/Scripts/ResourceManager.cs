@@ -7,7 +7,6 @@ public class ResourceManager : MonoBehaviour
 {
   public Text GoldTxt; // ссылка на переменную типа "Text"
   public int Gold, TowerCost, EnemyCost; // количество золота, стоимость постройки башни, вознаграждение за убитого юнита
-
   void Update()
   {
     GoldTxt.text = "Gold: " + Gold; // показываем текущее значение золота

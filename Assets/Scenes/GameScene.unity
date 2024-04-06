@@ -1088,7 +1088,13 @@ MonoBehaviour:
   - {fileID: 516764740}
   - {fileID: 721681992}
   ItemPrefab: {fileID: 8258069260755650608, guid: d567d0e1b16862748b26b3e28540bf12, type: 3}
-  DraggedItem: {fileID: 0}
+  towerarr:
+  - {fileID: 11400000, guid: 9d067945345145e4a963cebb0fd325f8, type: 2}
+  - {fileID: 11400000, guid: 27e4571e3d11af645a5c473509c5cafb, type: 2}
+  - {fileID: 11400000, guid: 32b72e63bc0ce3542a80b158bfd77ac1, type: 2}
+  - {fileID: 11400000, guid: ede6fa1a4ad612049b25d6f63edcf251, type: 2}
+  - {fileID: 11400000, guid: 881a7ebf32b608840a79ab496d0d8af1, type: 2}
+  - {fileID: 11400000, guid: ba41a0b087f42db4da443b07be71636d, type: 2}
 --- !u!4 &265672113
 Transform:
   m_ObjectHideFlags: 0
@@ -7100,11 +7106,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: -4394794124189916504, guid: ebfdb790c0d667144b03a5a7c303d1d2, type: 3}
   TimeToSpawn: 4
+  MinTimeToSpawn: 0
   Points:
   - {fileID: 1690249829}
   - {fileID: 510958326}
   MainHP: 100
   IncreaseHP: 15
+  timeSinceLastDecrease: 0
 --- !u!4 &1806878255
 Transform:
   m_ObjectHideFlags: 0
@@ -8790,6 +8798,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot
       objectReference: {fileID: 0}
+    - target: {fileID: 7691575364070926104, guid: 1607c10632b59d344863eb0d8542ace0, type: 3}
+      propertyPath: IM
+      value: 
+      objectReference: {fileID: 265672112}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

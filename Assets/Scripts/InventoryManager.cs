@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public InventorySlot[] inventorySlots;
     public GameObject ItemPrefab;
-    public ScriptableObject DraggedItem;
+    public MasterTower[] towerarr;
    public bool AddItemToFreeSlot(MasterTower tower)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -27,5 +27,10 @@ public class InventoryManager : MonoBehaviour
         GameObject newitemobject = Instantiate(ItemPrefab, slot.transform);
         InventoryItem NewInvItem = newitemobject.GetComponent<InventoryItem>();
         NewInvItem.InitialiseMasterTowerItem(tower);
+    }
+
+    public MasterTower GetTower(int ID)
+    {
+        return towerarr[ID - 1];
     }
 }
