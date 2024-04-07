@@ -18,9 +18,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         {
             InventoryItem inventoryItem = DraggedItem;
             inventoryItem.parentAfterDrag = transform;
-            Debug.Log(eventData.pointerDrag);
             return;
         }
+
         GameObject child = transform.GetChild(0).gameObject;
         InventoryItem childclass = child.GetComponent<InventoryItem>();
         if (DraggedItem.tower.ID % 3 != 0)
@@ -28,7 +28,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             if (DraggedItem.tower == transform.GetChild(0).GetComponent<InventoryItem>().tower)
             {
                 Destroy(child);
-                IM.AddItemToSlot(IM.GetTower(DraggedItem.tower.ID + 1), this.GetComponent<InventorySlot>());
+                IM.AddItemToSlot(IM.GetTower(DraggedItem.tower.ID + 1), gameObject.GetComponent<InventorySlot>());
                 Destroy(eventData.pointerDrag);
 
             }

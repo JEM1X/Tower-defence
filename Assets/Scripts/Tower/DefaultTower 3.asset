@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DefaultTower 3
   m_EditorClassIdentifier: 
   TowerIcon: {fileID: 21300000, guid: 64a75a3dfd76b154d982b4dcd9d8d106, type: 3}
-  Tower: {fileID: 6047163503873629617, guid: 567938970ee28834a87ae7b89066eab1, type: 3}
+  Tower: {fileID: 6047163503873629617, guid: d4474237a2d44a941b916d5ecc132242, type: 3}
   ID: 3

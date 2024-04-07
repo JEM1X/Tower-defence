@@ -22,21 +22,20 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.GetChild(0).gameObject.GetComponent<Text>().text = (tower.ID % 3).ToString();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void ItemBeginDrag()
     {
-        Debug.Log(eventData);
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
     }
 
-    public void OnDrag(PointerEventData eventData) 
+    public void ItemDrag()
     {
         transform.position = Input.mousePosition;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void ItemEndDrug()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Создаем луч от камеры к месту, где был отпущен предмет
@@ -49,11 +48,26 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 {
                     Destroy(gameObject);
                 }
-                
+
             }
 
         }
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        ItemBeginDrag();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        ItemDrag();
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        ItemEndDrug();
     }
 }

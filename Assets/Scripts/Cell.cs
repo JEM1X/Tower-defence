@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,7 +12,8 @@ public class Cell : MonoBehaviour
   public bool CanBuild;			// можем ли строить
   private ResourceManager rm; // ссылка на скрипт "ResourceManager"
   private InventoryManager IM;
-  public MasterTower tower;
+  public GameObject tower;
+  public MasterTower m_tower;
   public GameObject item;
 
   void Start()
@@ -42,10 +44,10 @@ public class Cell : MonoBehaviour
     {
         if (CanBuild)
         {
-            tower = Mtower;
-            Instantiate(Mtower.Tower, transform.position, Quaternion.Euler(-90, Random.Range(0, 360), 0)).GetComponent<Tower>();
+            m_tower = Mtower;
+            tower = Instantiate(Mtower.Tower, transform.position, Quaternion.Euler(-90, Random.Range(0, 360), 0)); //.GetComponent<Tower>();
             CanBuild = false;
-            return true;
+            return true; 
         }
         else 
         { 
@@ -56,24 +58,19 @@ public class Cell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (tower)
+        if (m_tower)
         {
             item = Instantiate(IM.ItemPrefab, Input.mousePosition, Quaternion.identity, GameObject.Find("MainInventory").transform);
-            item.GetComponent<InventoryItem>().InitialiseMasterTowerItem(tower);
-            Debug.Log(Input.mousePosition);
-            PointerEventData eventData = new PointerEventData(EventSystem.current);
-            eventData.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            //item.GetComponent<InventoryItem>().parentAfterDrag = IM.GetFreeSlot().transform;
-            item.GetComponent<InventoryItem>().OnBeginDrag(eventData);
-            item.transform.position = Input.mousePosition;
+            item.GetComponent<InventoryItem>().InitialiseMasterTowerItem(m_tower);
+            item.GetComponent<InventoryItem>().ItemBeginDrag();
         }
     }
     private void OnMouseDrag()
     {
         
-        if (tower)
+        if (m_tower)
         {
-            //item.transform.position = Input.mousePosition;
+            item.GetComponent<InventoryItem>().ItemDrag();
         }
     }
 
@@ -81,7 +78,15 @@ public class Cell : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Debug.Log("draged");
+        if (m_tower)
+        {
+            item.GetComponent<InventoryItem>().parentAfterDrag = IM.GetFreeSlot().transform;
+            item.GetComponent<InventoryItem>().ItemEndDrug();
+            Destroy(tower);
+            m_tower = null;
+            item = null;
+            CanBuild = true;
+        }
     }
 
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: FreezeTower 2
   m_EditorClassIdentifier: 
   TowerIcon: {fileID: 21300000, guid: 929849eb6901f104ebbcbfa2fdc21652, type: 3}
-  Tower: {fileID: 6047163503873629617, guid: e99a10df6ea4af84d82ced571c361b3f, type: 3}
+  Tower: {fileID: 6047163503873629617, guid: f64402d7eb04c8c4cacdce544d3ec1d6, type: 3}
   ID: 5

@@ -21,10 +21,14 @@ public class ShopItem : MonoBehaviour
 
     public void BuyItem()
     {
-        if (invman.AddItemToFreeSlot(tower))
+        if (resman.Gold > resman.TowerCost)
         {
-            resman.BuildTower();
-        }  
+            if (invman.AddItemToFreeSlot(tower))
+            {
+                resman.BuildTower();
+            }
+        }
+         
     }
 
 }
