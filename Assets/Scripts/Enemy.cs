@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
 
             if (index == Points.Length) // ���� ����� ������� ����� �������� ����� ����� �� ������� ������� "Points"
             {
+                
                 Destroy(gameObject); // ����������� �������� �������
             }
             else
@@ -60,8 +61,9 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet")) // ���� ��������� ����� ���������� � ��."Bullet"
         {
+            
             Destroy(other.gameObject); // ������� ������, ������� ���������� � ������ (��."Bullet")
-
+            
             HP -= other.GetComponent<Bullet>().Damage; // ��������� ������� �������� ����� �� �������� ����� ��."Bullet"        
 
             if (HP <= 0) //���� ������� �������� ����� <= 0
@@ -73,8 +75,9 @@ public class Enemy : MonoBehaviour
         } 
         else if (other.CompareTag("FreezeBullet"))
         {
+            
             Destroy(other.gameObject);
-
+            
             HP -= other.GetComponent<FreezeBullet>().Damage;
 
             if (HP <= 0)
@@ -84,12 +87,17 @@ public class Enemy : MonoBehaviour
                 rm.EnemyKill();
             }
         }
+        
         else if (other.CompareTag("Castle"))
         {
-            Destroy(gameObject); // ���������� ��������� ���� ��� ������������ � ������
-
+            
+            other.GetComponent<Castle>().TakeDamage(10);
+            Destroy(gameObject); 
         }
+    
+    
     }
+
 
     // ���������� ���������� �������� � ����� ������ (�������� � "HP=MaxHP;" � "void Start()")
     public void SetHP(float newHP) // "���������" �������� �� ���."Spawner"

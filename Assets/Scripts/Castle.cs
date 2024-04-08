@@ -5,7 +5,7 @@ using UnityEngine;
 public class Castle : MonoBehaviour
 {
     public int MaxHP;
-    private int HP;
+    public int HP;
 
     void Start()
     {
