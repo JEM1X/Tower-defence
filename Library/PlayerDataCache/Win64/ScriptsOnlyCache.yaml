@@ -1,9 +1,12 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BombBullet
+    - BombTower
     - Bullet
     - Castle
     - Cell
+    - DefeatMenu
     - Enemy
     - FreeezeTower
     - FreezeBullet
@@ -16,6 +19,7 @@ ScriptsOnlyBuild:
     - ResourceManager
     - ShopItem
     - Spawner
+    - StartGame
     - Tower
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
@@ -40,12 +44,15 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    - TMPro.TMP_SubMeshUI
     - TMPro.TextMeshProUGUI
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -59,6 +66,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
+    - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.RawImage
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
@@ -110,6 +118,9 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: ShopItem
     methodName: BuyItem
+  - assembly: Assembly-CSharp
+    fullTypeName: ShopItem
+    methodName: BuyItem
   - assembly: UnityEngine.CoreModule
     fullTypeName: UnityEngine.GameObject
     methodName: SetActive
@@ -135,11 +146,11 @@ ScriptsOnlyBuild:
     fullTypeName: UnityEngine.GameObject
     methodName: SetActive
   - assembly: Assembly-CSharp
-    fullTypeName: MainMenu
-    methodName: play
+    fullTypeName: DefeatMenu
+    methodName: Replay
   - assembly: Assembly-CSharp
-    fullTypeName: MainMenu
-    methodName: Quite
+    fullTypeName: DefeatMenu
+    methodName: GoToMainMenu
   sceneClasses:
     Assets/Scenes/DefeatMenu.unity:
     - Class: 1
@@ -161,6 +172,8 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 1570}
+    - Class: 114
       Script: {instanceID: 1604}
     - Class: 114
       Script: {instanceID: 1634}
@@ -169,11 +182,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3650}
     - Class: 114
-      Script: {instanceID: 6246}
+      Script: {instanceID: 5374}
     - Class: 114
-      Script: {instanceID: 7046}
+      Script: {instanceID: 6248}
     - Class: 114
-      Script: {instanceID: 7254}
+      Script: {instanceID: 7048}
+    - Class: 114
+      Script: {instanceID: 7256}
+    - Class: 114
+      Script: {instanceID: 10202}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -252,31 +269,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3650}
     - Class: 114
-      Script: {instanceID: 4314}
+      Script: {instanceID: 4312}
     - Class: 114
-      Script: {instanceID: 4454}
+      Script: {instanceID: 4452}
     - Class: 114
-      Script: {instanceID: 4550}
+      Script: {instanceID: 4548}
     - Class: 114
-      Script: {instanceID: 4640}
+      Script: {instanceID: 4648}
     - Class: 114
-      Script: {instanceID: 4856}
+      Script: {instanceID: 4854}
     - Class: 114
-      Script: {instanceID: 6170}
+      Script: {instanceID: 6150}
     - Class: 114
-      Script: {instanceID: 6344}
+      Script: {instanceID: 6172}
     - Class: 114
-      Script: {instanceID: 7046}
+      Script: {instanceID: 6660}
     - Class: 114
-      Script: {instanceID: 7680}
+      Script: {instanceID: 7048}
     - Class: 114
-      Script: {instanceID: 7690}
+      Script: {instanceID: 7682}
     - Class: 114
-      Script: {instanceID: 7716}
+      Script: {instanceID: 7692}
     - Class: 114
-      Script: {instanceID: 7788}
+      Script: {instanceID: 7718}
     - Class: 114
-      Script: {instanceID: 8822}
+      Script: {instanceID: 7790}
+    - Class: 114
+      Script: {instanceID: 8824}
+    - Class: 114
+      Script: {instanceID: 10202}
+    - Class: 114
+      Script: {instanceID: 10210}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -337,17 +360,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3650}
     - Class: 114
-      Script: {instanceID: 4962}
+      Script: {instanceID: 4960}
     - Class: 114
-      Script: {instanceID: 5310}
+      Script: {instanceID: 5308}
     - Class: 114
-      Script: {instanceID: 6246}
+      Script: {instanceID: 6248}
     - Class: 114
-      Script: {instanceID: 7046}
+      Script: {instanceID: 7048}
     - Class: 114
-      Script: {instanceID: 7254}
+      Script: {instanceID: 7256}
     - Class: 114
-      Script: {instanceID: 7716}
+      Script: {instanceID: 7718}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -781,16 +804,16 @@ ScriptsOnlyBuild:
     className: InventoryManager
   - hash:
       serializedVersion: 2
-      Hash: d0b408063998a934d2ebbe65250e14bc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: HealthBar
-  - hash:
-      serializedVersion: 2
       Hash: b747f5d40674055dd70e18552f1b0447
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Mask
+  - hash:
+      serializedVersion: 2
+      Hash: f1ed4bc24945cc0f8625363435f709b6
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: StartGame
   - hash:
       serializedVersion: 2
       Hash: 4718916586b3818eb69bf65df61f0f3a
@@ -883,6 +906,12 @@ ScriptsOnlyBuild:
     className: UnityOnCancelMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 732f83bec6602edfcc218addf44cd745
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: DefeatMenu
+  - hash:
+      serializedVersion: 2
       Hash: 7e9cad7f71f9cc52f699bbd2d2a75734
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -973,6 +1002,12 @@ ScriptsOnlyBuild:
     className: GlobalMessageListener
   - hash:
       serializedVersion: 2
+      Hash: df0463ad673531df868d7f28ebd93056
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: BombTower
+  - hash:
+      serializedVersion: 2
       Hash: 33f160a5c07e580c29aba2bd1e4db811
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
@@ -1009,12 +1044,6 @@ ScriptsOnlyBuild:
     className: NavMeshModifierVolume
   - hash:
       serializedVersion: 2
-      Hash: 45497b7e9d1498698e0236cea730fe16
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: Castle
-  - hash:
-      serializedVersion: 2
       Hash: d82086405f46de14829f6b4bcbdd8fc9
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -1043,6 +1072,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnDeselectMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 9dce7b77d06c80e263a4112565758e6f
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: BombBullet
   - hash:
       serializedVersion: 2
       Hash: 42192f5e950f09978986994e19d2bd78
@@ -1409,6 +1444,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 45497b7e9d1498698e0236cea730fe16
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Castle
+  - hash:
+      serializedVersion: 2
+      Hash: d0b408063998a934d2ebbe65250e14bc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: HealthBar
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity
