@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     private GameObject inventory;
     private GameObject shop;
     private GameObject backpack;
+    private GameObject castle;
 
     void Start()
     {
@@ -33,7 +34,14 @@ public class MainMenu : MonoBehaviour
         if (shop != null)
             shop.SetActive(false);
         if (backpack != null)
-            backpack.SetActive(false);
+            backpack.SetActive(false);   
+
+        castle = GameObject.Find("Castle");
+
+        if(castle != null) {
+            castle.SetActive(false);
+        }
+
     }
 
     public void play()
@@ -48,8 +56,12 @@ public class MainMenu : MonoBehaviour
             shop.SetActive(true);
         if (backpack != null)
             backpack.SetActive(true);
+        if (castle != null)
+        {
+            castle.SetActive(true);
+        }
 
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(1);
     }
 
     public void Quite()

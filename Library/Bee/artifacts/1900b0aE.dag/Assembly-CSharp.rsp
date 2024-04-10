@@ -385,6 +385,7 @@
 "Assets/Scripts/Bullet.cs"
 "Assets/Scripts/Castle.cs"
 "Assets/Scripts/Cell.cs"
+"Assets/Scripts/DefeatMenu.cs"
 "Assets/Scripts/Enemy.cs"
 "Assets/Scripts/FreezeBullet.cs"
 "Assets/Scripts/FreezeTower.cs"
@@ -398,6 +399,7 @@
 "Assets/Scripts/ShopItem.cs"
 "Assets/Scripts/ShopTower.cs"
 "Assets/Scripts/Spawner.cs"
+"Assets/Scripts/StartGame.cs"
 "Assets/Scripts/Tower.cs"
 "Assets/Scripts/Tower/MasterTower.cs"
 -langversion:9.0
