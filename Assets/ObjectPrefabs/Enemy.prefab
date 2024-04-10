@@ -52,6 +52,7 @@ MonoBehaviour:
   Points:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   MaxHP: 100
 --- !u!136 &526054496175777764
 CapsuleCollider:
