@@ -87,6 +87,28 @@ public class Enemy : MonoBehaviour
                 rm.EnemyKill();
             }
         }
+
+        else if (other.CompareTag("BombBullet"))
+        {
+
+            Destroy(other.gameObject);
+
+            //Collider[] coll = Physics.OverlapSphere(transform.position, 1, gameObject);
+            // создаём сферу "Physics.OverlapSphere" для поиска внутри неё всех коллайдеров юнитов
+            // "transform.position" - центр сферы, "Radius" - радиус сферы, "EnemyLayer" юниты с коллайдерами на слое "Enemy"
+            // "coll" - массив найденных коллайдеров юнитов слоя "Enemy"
+
+            //if (coll.Length > 0) // если коллайдеры юнитов найдены
+            //   enemy = coll[0].transform; // сохраняем координаты 1-го найденного юнита
+            HP -= other.GetComponent<BombBullet>().Damage;
+            
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+
+                rm.EnemyKill();
+            }
+        }
         
         else if (other.CompareTag("Castle"))
         {
@@ -94,10 +116,25 @@ public class Enemy : MonoBehaviour
             other.GetComponent<Castle>().TakeDamage(10);
             Destroy(gameObject); 
         }
+
     
     
     }
 
+    public void TakeDamage(float damage)
+    {
+        HP -= damage; // уменьшаем текущее здоровье на величину полученного урона
+
+        if (HP <= 0) // если здоровье меньше или равно нулю
+        {
+            Destroy(gameObject); // уничтожаем объект врага
+
+            if (rm != null)
+            {
+                rm.EnemyKill(); // уведомляем ResourceManager о смерти врага
+            }
+        }
+    }
 
     // ���������� ���������� �������� � ����� ������ (�������� � "HP=MaxHP;" � "void Start()")
     public void SetHP(float newHP) // "���������" �������� �� ���."Spawner"

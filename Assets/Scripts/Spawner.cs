@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
       enemy.SetHP (MainHP); // передаём "новое" здоровье экз.прф."Enemy"
       MainHP += IncreaseHP; // увеличиваем здоровье для каждого нового юнита
 
-            if (timeSinceLastDecrease >= 30f)
+            if (timeSinceLastDecrease >= 45f)
             {
                 MainHP += 20;
                 TimeToSpawn /= 2; // уменьшаем частоту создания новых юнитов (спавна)

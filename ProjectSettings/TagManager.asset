@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - FreezeBullet
   - Enemy
+  - BombBullet
   layers:
   - Default
   - TransparentFX
