@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Castle : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Castle : MonoBehaviour
         healthBar.SetHealth(HP);
         if (HP <= 0)
         {
-            Destroy(gameObject); // Уничтожаем замок, если его здоровье меньше или равно нулю
+            Destroy(gameObject);
         }
     }
 }
