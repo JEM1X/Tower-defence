@@ -20,6 +20,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         tower = newtower;
         image.sprite = newtower.TowerIcon;
         transform.GetChild(0).gameObject.GetComponent<Text>().text = (tower.ID % 3).ToString();
+
+        if (tower.ID % 3 == 0)
+        {
+            transform.GetChild(0).gameObject.GetComponent<Text>().text = 3.ToString();
+        }
     }
 
     public void ItemBeginDrag()
