@@ -18,8 +18,8 @@ public class Castle : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (!isCastleDestroyed)
-        {  // ѕровер€ем, не был ли замок уже уничтожен
+        if (!isCastleDestroyed) // ѕровер€ем, не был ли замок уже уничтожен
+        {  
             HP -= damageAmount;  // ”меньшаем количество здоровь€ на величину урона
             healthBar.SetHealth(HP);  // ќбновл€ем отображение здоровь€ на healthBar
             if (HP <= 0)  // ≈сли здоровье стало меньше или равно нулю

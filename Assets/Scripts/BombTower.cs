@@ -59,13 +59,6 @@ public class BombTower : MonoBehaviour
         bullet.LookAt(enemy.GetChild(0)); // снаряд "смотрит" на центр об."Capsule" юнита
         bullet.GetComponent<BombBullet>().Damage = Damage; // записываем урон башни в урон снаряда (инициализируем переменную "Damage" скрипта "BombBullet")
 
-        // Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, ExplosionRadius, EnemyLayer); // находим всех врагов в радиусе взрыва
-
-        // foreach (Collider enemyCollider in enemiesInRange) // проходимся по найденным врагам
-        // {
-        //    enemyCollider.GetComponent<Enemy>().TakeDamage(Damage); // наносим урон всем врагам в радиусе взрыва
-        // }
-
         timeToFire = FireDelay; // восстанавливаем время до выстрела
     }
 }

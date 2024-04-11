@@ -14,12 +14,12 @@ public class ResourceManager : MonoBehaviour
 
   public void BuildTower() // построили башню
   {
-    Gold -= TowerCost;
+    Gold -= TowerCost; // снижаем количество монет на цену башни
   }
 
   public void EnemyKill() // убили юнита
   {
-    Gold += EnemyCost;
+    Gold += EnemyCost; // добавляем количество монет на цену Enemy
   }
 
 }

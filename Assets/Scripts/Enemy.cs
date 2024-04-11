@@ -2,126 +2,119 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour // работа с юнитом
 {
-    public float Speed; // �������� �������� �����
-    public float RotationSpeed; // �������� �������� �����
-    public Transform[] Points; // ������ ����� �������� �������� �����
-    private Transform currentPoint; // ������� ����� �������� ����� (���� ��������)
-    private int index; // ����� ������� ����� �������� ����� �� ������� "Points"
-    public float MaxHP; // ��������� ��������
-    private float HP; // ������� ��������
-    private ResourceManager rm; // ������ �� ������ "ResourceManager"
+    public float Speed; // скорость движения юнита
+    public float RotationSpeed; // скорость поворота юнита
+    public Transform[] Points; // массив точек маршрута движения юнита
+    private Transform currentPoint; // текущая точка движения юнита (куда движемся)
+    private int index; // номер текущей точки движения юнита из массива "Points"
+    public float MaxHP; // начальное здоровье
+    private float HP; // текущее здоровье
+    private ResourceManager rm; // ссылка на скрипт "ResourceManager"
 
     void Start()
     {
-        index = 0; // �������� � 0-� ����� (1-� �� ������� � ������� "Points")
-        currentPoint = Points[index]; // ������� ����� �������� ����� - 0-� ������� ������� "Points"
-        HP = MaxHP; // ������������� ����� ������� �������� ������������� �������� (������, ���� ������������ "SetHP(float newHP)")
-        rm = FindObjectOfType<ResourceManager>(); // ������ ���������/������ �� ������ "ResourceManager"
+        index = 0; // начинаем с 0-й точки (1-я по порядку в массиве "Points")
+        currentPoint = Points[index]; // текущая точка движения юнита - 0-й элемент массива "Points"
+        HP = MaxHP; // устанавливаем юниту текущее здоровье максимальному значению (убрать, если используется "SetHP(float newHP)")
+        rm = FindObjectOfType<ResourceManager>(); // создаём указатель/ссылку на скрипт "ResourceManager"
     }
 
     void Update()
     {
         Vector3 direct_pos = currentPoint.position - transform.position;
-        // "direct_pos" - ������/��������/������ ����������� ����� (���� � �� ������� ��������)
-        // "currentPoint.position" - �������/���������� ������� ����� �������� �� ������� "Points" (���� ��������)
-        // "transform.position"- �������/���������� ������� ������� ����� (���������� ���."Enemy")
-        // "transform.position" - ��������� � �������� "Position" �������, � ��. �������� ������ ������
+        // "direct_pos" - вектор/смещение/дельта перемещения юнита (куда и на сколько движемся)
+        // "currentPoint.position" - позиция/координаты текущей точки движения из массива "Points" (куда движемся)
+        // "transform.position"- позиция/координаты текущей позиции юнита (экземпляра прф."Enemy")
+        // "transform.position" - обращение к свойству "Position" объекта, к кт. привязан данный скрипт
         Vector3 direct_rot = Vector3.RotateTowards(transform.forward, direct_pos, Time.deltaTime * RotationSpeed, 0);
-        // ".RotateTowards" (������� �)
-        // "transform.forward" - ������� �� ������ �������/�����������/���
-        transform.rotation = Quaternion.LookRotation(direct_rot); // ������� � ������� ������� "direct_pos"
+        // ".RotateTowards" (поворот к)
+        // "transform.forward" - поворот по синему вектору/направлению/оси
+        transform.rotation = Quaternion.LookRotation(direct_rot); // поворот в сторону вектора "direct_pos"
 
         transform.position = Vector3.MoveTowards(transform.position, currentPoint.position, Time.deltaTime * Speed);
-        // ".MoveTowards" (������� �) - ����������� �� ������ � �������� �����
-        // "transform.position" - �������/��������� �������
-        // "currentPoint.position" - �������/�������� �������
-        // "Time.deltaTime*Speed" - ��� �����������
-        // "Time.deltaTime" - ����� � ��������, ������� ������������� ��� ��������� ���������� �����
+        // ".MoveTowards" (перейти к) - перемещение по прямой с заданным шагом
+        // "transform.position" - текущая/начальная позиция
+        // "currentPoint.position" - целевая/конечная позиция
+        // "Time.deltaTime*Speed" - шаг перемещения
+        // "Time.deltaTime" - время в секундах, которое потребовалось для отрисовки последнего кадра
 
         if (transform.position == currentPoint.position)
-        // ���� �������� ������� ����� �������� ����� (���� ��������), �.�. �������� ���������� ���� �������� ��������
+        // если достигли текущей точки движения юнита (куда движемся), т.е. достигли очередного угла маршрута движения
         {
-            index++; // ��������� � ��������� ����� �������� �����
+            index++; // переходим к следующей точке движения юнита
 
-            if (index == Points.Length) // ���� ����� ������� ����� �������� ����� ����� �� ������� ������� "Points"
+            if (index == Points.Length)  // если номер текущей точки движения юнита вышел за границы массива "Points"
             {
                 
-                Destroy(gameObject); // ����������� �������� �������
+                Destroy(gameObject); // уничтожение игрового объекта
             }
             else
             {
-                currentPoint = Points[index]; // ������� ����� �������� ����� - "index"-� ������� ������� "Points"
+                currentPoint = Points[index]; // текущая точка движения юнита - "index"-й элемент массива "Points"
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other) // ������������ ��������
+    private void OnTriggerEnter(Collider other) // срабатывание триггера
     {
-        if (other.CompareTag("Bullet")) // ���� ��������� ����� ���������� � ��."Bullet"
+        if (other.CompareTag("Bullet")) // если коллайдер юнита столкнулся с об."Bullet"
         {
             
-            Destroy(other.gameObject); // ������� ������, ������� ���������� � ������ (��."Bullet")
-            
-            HP -= other.GetComponent<Bullet>().Damage; // ��������� ������� �������� ����� �� �������� ����� ��."Bullet"        
+            Destroy(other.gameObject); // удаляем объект, который столкнулся с юнитом (об."Bullet")
 
-            if (HP <= 0) //���� ������� �������� ����� <= 0
+            HP -= other.GetComponent<Bullet>().Damage; // уменьшаем текущее здоровье юнита на величину урона об."Bullet"        
+
+            if (HP <= 0) //если текущее здоровье юнита <= 0
             {
-                Destroy(gameObject); // ���������� ���� (���.���."Enemy")
+                Destroy(gameObject); // уничтожаем юнит (экз.прф."Enemy")
 
-                rm.EnemyKill(); // �������� ������ �� ����������� ����� 
+                rm.EnemyKill(); // получаем золото за уничтожение юнита
             }
         } 
-        else if (other.CompareTag("FreezeBullet"))
+        else if (other.CompareTag("FreezeBullet")) // если коллайдер юнита столкнулся с об."FreezeBullet"
         {
             
-            Destroy(other.gameObject);
-            
-            HP -= other.GetComponent<FreezeBullet>().Damage;
+            Destroy(other.gameObject); // удаляем объект, который столкнулся с юнитом (об."FreezeBullet")
 
-            if (HP <= 0)
+            HP -= other.GetComponent<FreezeBullet>().Damage; // уменьшаем текущее здоровье юнита на величину урона об."FreezeBullet"
+
+            if (HP <= 0) //если текущее здоровье юнита <= 0
             {
-                Destroy(gameObject);
+                Destroy(gameObject); // уничтожаем юнит (экз.прф."Enemy")
 
-                rm.EnemyKill();
+                rm.EnemyKill(); // получаем золото за уничтожение юнита
             }
         }
 
-        else if (other.CompareTag("BombBullet"))
+        else if (other.CompareTag("BombBullet")) // если коллайдер юнита столкнулся с об."BombBullet"
         {
 
-            Destroy(other.gameObject);
+            Destroy(other.gameObject); // удаляем объект, который столкнулся с юнитом (об."BombBullet")
 
-            //Collider[] coll = Physics.OverlapSphere(transform.position, 1, gameObject);
-            // создаём сферу "Physics.OverlapSphere" для поиска внутри неё всех коллайдеров юнитов
-            // "transform.position" - центр сферы, "Radius" - радиус сферы, "EnemyLayer" юниты с коллайдерами на слое "Enemy"
-            // "coll" - массив найденных коллайдеров юнитов слоя "Enemy"
+            HP -= other.GetComponent<BombBullet>().Damage; // уменьшаем текущее здоровье юнита на величину урона об."BombBullet"
 
-            //if (coll.Length > 0) // если коллайдеры юнитов найдены
-            //   enemy = coll[0].transform; // сохраняем координаты 1-го найденного юнита
-            HP -= other.GetComponent<BombBullet>().Damage;
-            
-            if (HP <= 0)
+            if (HP <= 0) //если текущее здоровье юнита <= 0
             {
-                Destroy(gameObject);
+                Destroy(gameObject); // уничтожаем юнит (экз.прф."Enemy")
 
-                rm.EnemyKill();
+                rm.EnemyKill(); // получаем золото за уничтожение юнита
             }
         }
         
-        else if (other.CompareTag("Castle"))
+        else if (other.CompareTag("Castle")) // если коллайдер юнита столкнулся с об."Castle"
         {
             
-            other.GetComponent<Castle>().TakeDamage(10);
-            Destroy(gameObject); 
+            other.GetComponent<Castle>().TakeDamage(10); // наносим урон об."Castle" в размере 10
+            Destroy(gameObject); // уничтожаем юнит (экз.прф."Enemy")
         }
 
-    
+ 
     
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage) // приватная функция нанесения урона
     {
         HP -= damage; // уменьшаем текущее здоровье на величину полученного урона
 
@@ -136,10 +129,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // ���������� ���������� �������� � ����� ������ (�������� � "HP=MaxHP;" � "void Start()")
-    public void SetHP(float newHP) // "���������" �������� �� ���."Spawner"
+    // реализация увеличения здоровья с новым юнитом (конфликт с "HP=MaxHP;" в "void Start()")
+    public void SetHP(float newHP) // "принимаем" здоровье от скр."Spawner"
     {
-        HP = newHP; // ������������� "�����" ��������
+        HP = newHP; // устанавливаем "новое" здоровье
     }
 
 }
